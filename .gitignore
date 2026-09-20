@@ -68,6 +68,16 @@ dmypy.json
 *.swp
 *.swo
 
+# Node / frontend
+node_modules/
+dist-ssr/
+*.local
+frontend/dist/
+.eslintcache
+
+# Vite / build output
+frontend/.vite/
+
 # OS
 .DS_Store
 Thumbs.db

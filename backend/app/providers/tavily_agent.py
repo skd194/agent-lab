@@ -1,4 +1,12 @@
-"""A ReAct-style search agent that answers queries using Tavily web search."""
+"""A ReAct-style search agent that answers queries using Tavily web search.
+
+This is the project's *original* Tavily/LangChain agent (§8). It is preserved
+here rather than recreated. The only structural change from the standalone
+script is that the agent is now built lazily via :func:`build_search_agent`
+instead of at import time, so the module can be imported safely in demo mode
+or environments without API keys. Running the module directly still behaves
+exactly as before.
+"""
 
 import json
 
@@ -30,9 +38,19 @@ class AgentResponse(BaseModel):
     )
 
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
-tools = [TavilySearch()]
-agent = create_agent(model=llm, tools=tools, response_format=AgentResponse)
+def build_search_agent(model: str = "gpt-4o", temperature: float = 0.0):
+    """Build the Tavily-backed ReAct agent.
+
+    Constructed lazily so importing this module never requires API keys.
+    """
+    llm = ChatOpenAI(model=model, temperature=temperature)
+    tools = [TavilySearch()]
+    return create_agent(model=llm, tools=tools, response_format=AgentResponse)
+
+
+def build_raw_tavily_tool(**kwargs) -> TavilySearch:
+    """Return a bare TavilySearch tool for raw, structured result retrieval."""
+    return TavilySearch(**kwargs)
 
 
 def pretty_print(data):
@@ -43,6 +61,7 @@ def pretty_print(data):
 def main():
     """Run the agent against a sample query and print the response."""
     print("Hello from agent-lab!")
+    agent = build_search_agent()
     llm_input = {"messages": [HumanMessage(content="Search for the latest news on AI")]}
     result = agent.invoke(llm_input)
     pretty_print(result)
