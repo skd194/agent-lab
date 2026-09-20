@@ -23,7 +23,7 @@ class User(Base):
     preference: Mapped[UserPreference | None] = relationship(
         back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
-    portfolios: Mapped[list["Portfolio"]] = relationship(  # noqa: F821
+    portfolios: Mapped[list[Portfolio]] = relationship(  # noqa: F821
         back_populates="user", cascade="all, delete-orphan"
     )
 

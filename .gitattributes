@@ -1,0 +1,8 @@
+# Normalize line endings to LF in the repo; check out native on Windows.
+* text=auto eol=lf
+
+# Binary / generated
+*.png binary
+*.jpg binary
+*.ico binary
+uv.lock text eol=lf

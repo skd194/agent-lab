@@ -14,10 +14,10 @@ from app.providers.demo import DemoNewsProvider
 logger = get_logger(__name__)
 
 __all__ = [
+    "DemoNewsProvider",
     "NewsSearchProvider",
     "RawArticle",
     "SearchResult",
-    "DemoNewsProvider",
     "get_news_provider",
 ]
 

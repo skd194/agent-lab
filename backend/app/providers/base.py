@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import abc
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 @dataclass(slots=True)
@@ -27,7 +27,7 @@ class RawArticle:
     query: str
     score: float = 0.0
     published_at: datetime | None = None
-    retrieved_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    retrieved_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     raw: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:

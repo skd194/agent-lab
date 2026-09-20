@@ -6,7 +6,7 @@ user-configurable.
 
 from __future__ import annotations
 
-from sqlalchemy import Boolean, Float, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Float, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -21,7 +21,7 @@ class Portfolio(Base):
     name: Mapped[str] = mapped_column(String(120), default="My Portfolio")
     base_currency: Mapped[str] = mapped_column(String(3), default="INR")
 
-    user: Mapped["User"] = relationship(back_populates="portfolios")  # noqa: F821
+    user: Mapped[User] = relationship(back_populates="portfolios")  # noqa: F821
     holdings: Mapped[list[PortfolioHolding]] = relationship(
         back_populates="portfolio", cascade="all, delete-orphan"
     )

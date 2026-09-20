@@ -24,7 +24,8 @@ def _parse_published(value: str | None) -> datetime | None:
     if not value:
         return None
     try:
-        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        # Python 3.11+ parses a trailing "Z" natively.
+        return datetime.fromisoformat(value)
     except (ValueError, TypeError):
         return None
 

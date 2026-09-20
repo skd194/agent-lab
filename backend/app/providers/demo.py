@@ -9,7 +9,7 @@ can run end-to-end offline.
 from __future__ import annotations
 
 import hashlib
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from app.providers.base import NewsSearchProvider, RawArticle, SearchResult
 
@@ -34,7 +34,7 @@ class DemoNewsProvider(NewsSearchProvider):
         time_range: str | None = None,
         **kwargs,
     ) -> SearchResult:
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         count = min(max_results, 4)
         articles: list[RawArticle] = []
         for i in range(count):
