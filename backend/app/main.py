@@ -5,7 +5,15 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import system
+from app.api.routes import (
+    ai,
+    briefing,
+    finance,
+    news,
+    preferences,
+    system,
+    voice,
+)
 from app.core.config import settings
 from app.core.logging import configure_logging, get_logger
 from app.core.redis import close_redis
@@ -43,8 +51,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers (more added as features land: briefing, news, finance, ai, voice)
-app.include_router(system.router, prefix=settings.api_prefix)
+# Routers
+for module in (system, preferences, briefing, news, finance, ai, voice):
+    app.include_router(module.router, prefix=settings.api_prefix)
 
 
 @app.get("/health", tags=["system"])
