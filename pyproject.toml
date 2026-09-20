@@ -19,3 +19,7 @@ target-version = ["py311"]
 
 [tool.isort]
 profile = "black"
+
+[tool.pylint.messages_control]
+# Pydantic models are data schemas and legitimately have few/no public methods.
+disable = ["too-few-public-methods"]
