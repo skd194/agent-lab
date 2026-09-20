@@ -14,9 +14,11 @@ from app.schemas.voice import VoiceCommandResult
 # Ordered (regex, intent) rules (§21). First match wins.
 _ROUTES: list[tuple[str, str]] = [
     (r"\bgood (morning|afternoon|evening)\b", "greeting"),
-    (r"\bbrief me\b|\bbriefing\b|\bbrief\b", "full_briefing"),
+    # Domain-specific intents are matched before the generic "brief" so that
+    # e.g. "give me the finance briefing" routes to finance, not full_briefing.
     (r"\bfinance\b|\bportfolio\b", "finance_briefing"),
     (r"\btechnology\b|\btech\b", "domain_technology"),
+    (r"\bbrief me\b|\bbriefing\b|\bbrief\b", "full_briefing"),
     (r"\bindia\b", "domain_india"),
     (r"\bworld\b|\binternational\b", "domain_international"),
     (r"\btop (three|3)\b", "top_stories"),
