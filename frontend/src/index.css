@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AOEN design tokens (§41) — dark, cyan-accented intelligence terminal (§17). */
+:root {
+  --aoen-bg: 5 7 13; /* #05070d deep space */
+  --aoen-surface: 12 16 26; /* glass base */
+  --aoen-surface-elevated: 18 24 38;
+  --aoen-border: 38 48 66;
+  --aoen-primary: 56 189 248; /* cyan/blue accent */
+  --aoen-secondary: 129 140 248; /* indigo */
+  --aoen-success: 52 211 153;
+  --aoen-warning: 251 191 36;
+  --aoen-danger: 248 113 113;
+  --aoen-text-primary: 226 236 247;
+  --aoen-text-secondary: 148 165 186;
+  --aoen-muted: 90 104 124;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+    background-image:
+      radial-gradient(
+        ellipse 80% 50% at 50% -10%,
+        rgb(var(--aoen-primary) / 0.12),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 100% 10%,
+        rgb(var(--aoen-secondary) / 0.08),
+        transparent 55%
+      );
+    background-attachment: fixed;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-pill;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* Glass surface — subtle transparency + fine border + blur (§17). */
+  .glass {
+    @apply bg-surface/60 backdrop-blur-glass border border-border/70 rounded-card;
+  }
+  .glass-elevated {
+    @apply bg-surface-elevated/70 backdrop-blur-glass border border-border/70 rounded-card shadow-card;
+  }
+  .hairline {
+    @apply border-border/60;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-pill border border-border/70 bg-surface/50 px-2.5 py-1 text-xs font-medium text-text-secondary;
+  }
+  .label-eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-muted;
+  }
+  .focus-ring {
+    @apply outline-none ring-1 ring-transparent focus-visible:ring-primary/60;
+  }
+}
+
+/* Respect reduced motion (§42). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
